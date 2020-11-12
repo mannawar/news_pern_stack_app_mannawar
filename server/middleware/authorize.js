@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-//this middleware will on continue on if the token is inside the local storage
+//this middleware will on continue if the token is inside the local storage
 
 module.exports = function(req, res, next) {
   // Get token from header
-  const token = req.header("jwt_token");
+  const token = req.header("jwtToken");
 
   // Check if not token
   if (!token) {

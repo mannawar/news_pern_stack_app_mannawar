@@ -7,11 +7,12 @@ CREATE DATABASE newsfeeds;
 --   image VARCHAR(255)
 -- );
 
-CREATE TABLE users(
-  user_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+CREATE TABLE user1(
+  user_id UUID DEFAULT uuid_generate_v4(),
   user_name VARCHAR(255) NOT NULL,
   user_email VARCHAR(255) NOT NULL UNIQUE,
-  user_password VARCHAR(255) NOT NULL
+  user_password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (user_id)
 );
 
 CREATE TABLE newslistings(
@@ -21,7 +22,7 @@ CREATE TABLE newslistings(
   description VARCHAR(255),  
   image VARCHAR(255),
   PRIMARY KEY (news_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  FOREIGN KEY (user_id) REFERENCES user1(user_id)
 );
 
 
