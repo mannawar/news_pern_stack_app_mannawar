@@ -3,7 +3,7 @@ const authorize = require("../middleware/authorize");
 const pool = require("../db");
 
 //create a new article(only logged in user1)
-router.post("/article", authorize, async(req, res) => {
+router.post("/article?", authorize, async(req, res) => {
   try {
     console.log(req.user);
     const { title, description, image } = req.body;
@@ -15,7 +15,7 @@ router.post("/article", authorize, async(req, res) => {
 })
 
 //update a news article(only logged in user)
-router.patch("/update/:id", authorize,async(req, res) => {
+router.patch("/update/:id?", authorize,async(req, res) => {
   try {
     const {id} = req.params;
     const { title, description, image } = req.body;
@@ -33,13 +33,13 @@ router.patch("/update/:id", authorize,async(req, res) => {
 })
 
 //delete
-router.delete("/del/:id", authorize, async(req, res) => {
+router.delete("/del/:id?", authorize, async(req, res) => {
   try {
     const { id } = req.params;
     const deletenewnews = await pool.query("DELETE FROM newslistings WHERE news_id = $1 AND user_id = $2 RETURNING *", [id, req.user]);
 
     if( deletenewnews.rows.length === 0) {
-      return res.json("The todo is not yours");
+      return res.json("The newslisting is not yours");
     }
 
     res.json(`entries for the id ${id} was deleted`) 
@@ -49,12 +49,23 @@ router.delete("/del/:id", authorize, async(req, res) => {
 })
 
 //news listing (only logged in user1)(GET)
+router.get("/artdet", authorize ,async(req, res) => {
+  try {
+    const newslisting = await pool.query("SELECT title FROM newslistings");
+    console.log(newslisting);
+    res.json(newslisting.rows);
+  } catch (err) {
+    console.error(err.message)
+  }
+})
 
 
 //get news article detail(only logged in user1)
-router.get("/articledetails", async(req, res) => {
+router.get("/artdet/:id?", authorize ,async(req, res) => {
   try {
-    const articleDetails = await pool.query("SELECT description FROM newslistings");
+    const { id } = req.params;
+    const articleDetails = await pool.query("SELECT description FROM newslistings WHERE news_id = $1", [id]);
+    console.log(articleDetails);
     res.json(articleDetails.rows);
   } catch (err) {
     console.error(err.message)
