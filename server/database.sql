@@ -19,11 +19,13 @@ CREATE TABLE newslistings(
   news_id SERIAL,
   user_id UUID,
   title VARCHAR(255),
+  date_saved DATE NOT NULL DEFAULT CURRENT_DATE,
   description VARCHAR(255),  
   image VARCHAR(255),
   PRIMARY KEY (news_id),
   FOREIGN KEY (user_id) REFERENCES user1(user_id)
 );
+
 
 
 

@@ -22,7 +22,7 @@ router.patch("/update/:id?", authorize,async(req, res) => {
     const updateNewsfeed = await pool.query("UPDATE newslistings SET title = $1, description = $2, image = $3 WHERE news_id = $4 AND user_id = $5 RETURNING *" , [title, description, image, id, req.user]);
 
     if(updateNewsfeed.rows.length === 0) {
-      return res.json("This todo is not yours")
+      return res.json("This newslisting is not yours")
     }
 
     res.json("newslistings table is updated");
@@ -48,10 +48,10 @@ router.delete("/del/:id?", authorize, async(req, res) => {
   }
 })
 
-//news listing (only logged in user1)(GET)
+//news listing (only logged in user1)(GET)//2nd step of frontend
 router.get("/artdet", authorize ,async(req, res) => {
   try {
-    const newslisting = await pool.query("SELECT title FROM newslistings");
+    const newslisting = await pool.query("SELECT user_name, title, date_saved FROM newslistings INNER JOIN user1 ON user1.user_id = newslistings.user_id");
     console.log(newslisting);
     res.json(newslisting.rows);
   } catch (err) {

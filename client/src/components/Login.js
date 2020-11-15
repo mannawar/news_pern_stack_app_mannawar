@@ -30,7 +30,7 @@ const Login = ({ setAuth }) => {
       );
 
       const parseRes = await response.json();
-
+      console.log(parseRes); 
       if (parseRes.jwtToken) {
         localStorage.setItem("token", parseRes.jwtToken);
         setAuth(true);
@@ -52,6 +52,7 @@ const Login = ({ setAuth }) => {
           type="text"
           name="email"
           value={email}
+          placeholder=" Your email here"
           onChange={e => onChange(e)}
           className="form-control my-3"
         />
@@ -59,12 +60,13 @@ const Login = ({ setAuth }) => {
           type="password"
           name="password"
           value={password}
+          placeholder="Your password here"
           onChange={e => onChange(e)}
           className="form-control my-3"
         />
         <button className="btn btn-success btn-block">Submit</button>
       </form>
-      <Link to="/register">register</Link>
+      <Link to="/register">Signup</Link>
     </Fragment>
   );
 };
