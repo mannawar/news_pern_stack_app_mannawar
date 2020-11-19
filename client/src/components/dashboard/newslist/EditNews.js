@@ -1,23 +1,23 @@
 import React, { Fragment, useState } from "react";
 
-const EditNews = ({ news, setNewsChange }) => {
+const EditNews = ({ newslisting, setNewsChange }) => {
   //editText function
-
   const editText = async id => {
     try {
-      const body = { description };
-
+      console.log(newslisting);
+      const body = { title, description, image };
+      console.log(newslisting);
       const myHeaders = new Headers();
 
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("jwt_token", localStorage.token);
+      myHeaders.append("jwtToken", localStorage.token);
 
-      await fetch(`http://localhost:5000/dashboard/update/${id}`, {
+    await fetch(`http://localhost:5000/dashboard/update/${id}`, {
         method: "PATCH",
         headers: myHeaders,
         body: JSON.stringify(body)
       });
-
+      
       setNewsChange(true);
 
       // window.location = "/";
@@ -26,34 +26,36 @@ const EditNews = ({ news, setNewsChange }) => {
     }
   };
 
-  const [description, setDescription] = useState(news.description);
+  const [title, setTitle] = useState(newslisting.title);
+  const [description, setDescription] = useState(newslisting.description);
+  const [image, setImage] = useState(newslisting.image);
   return (
     <Fragment>
       <button
         type="button"
         className="btn btn-warning"
         data-toggle="modal"
-        data-target={`#id${news.todo_id}`}
+        data-target={`#id${newslisting.news_id}`}
       >
         Edit
       </button>
       {/* id = "id21"*/}
       <div
         className="modal"
-        id={`id${news.todo_id}`}
-        onClick={() => setDescription(news.description)}
-      >
+        id={`id${newslisting.news_id}`}
+        onClick={() => setDescription(newslisting.description)}
+      >      
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">Edit Todo</h4>
+              <h4 className="modal-title">Edit News</h4>
               <button
                 type="button"
                 className="close"
                 data-dismiss="modal"
-                onClick={() => setDescription(news.description)}
+                onClick={() => setDescription(newslisting.description)}
               >
-                &times;
+                 &times;
               </button>
             </div>
 
@@ -71,7 +73,7 @@ const EditNews = ({ news, setNewsChange }) => {
                 type="button"
                 className="btn btn-warning"
                 data-dismiss="modal"
-                onClick={() => editText(news.todo_id)}
+                onClick={() => editText(newslisting.news_id)}
               >
                 Edit
               </button>
@@ -79,7 +81,7 @@ const EditNews = ({ news, setNewsChange }) => {
                 type="button"
                 className="btn btn-danger"
                 data-dismiss="modal"
-                onClick={() => setDescription(news.description)}
+                onClick={() => setDescription(newslisting.description)}
               >
                 Close
               </button>

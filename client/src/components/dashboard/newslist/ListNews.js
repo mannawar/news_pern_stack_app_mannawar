@@ -6,27 +6,18 @@ const ListNews = ({ allNews, setNewsChange }) => {
   const [newslistings, setNewsListings] = useState([]); //empty array
 
   //delete newslisting function
-
   async function deleteNews(id) {
     try {
+      console.log(id);
       await fetch(`http://localhost:5000/dashboard/del/${id}`, {
         method: "DELETE",
-        headers: { jwt_token: localStorage.token }
+        headers: { jwtToken: localStorage.token }
       });
-      console.log(newslistings);
       setNewsListings(newslistings.filter(newslisting => newslisting.news_id !== id));
     } catch (err) {
       console.error(err.message);
     }
   }
-
-  // async function getTodos() {
-  //   const res = await fetch("http://localhost:5000/newslistings");
-
-  //   const todoArray = await res.json();
-
-  //   setNewsListings(todoArray);
-  // }
 
   useEffect(() => {
     setNewsListings(allNews);
@@ -40,7 +31,9 @@ const ListNews = ({ allNews, setNewsChange }) => {
       <table className="table mt-5">
         <thead>
           <tr>
+            <th>Title</th>
             <th>Description</th>
+            <th>Image</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>
@@ -48,11 +41,11 @@ const ListNews = ({ allNews, setNewsChange }) => {
         <tbody>
           {newslistings.length !== 0 &&
             newslistings[0].news_id !== null &&
-            newslistings.map(newslisting => (
-              <tr key={newslisting.news_id}>
-                <td>{newslisting.title}</td>
-                <td>{newslisting.description}</td>
-                <td>{newslisting.image}</td>
+            newslistings.map((newslisting, key) => (
+              <tr key={Math.random()}>
+                <td key={Math.random()}>{newslisting.title}</td>
+                <td key={newslisting.description}>{newslisting.description}</td>
+                <td key={newslisting.image}>{newslisting.image}</td>
                 <td>
                   <EditNews newslisting={newslisting} setNewsChange={setNewsChange} />
                 </td>

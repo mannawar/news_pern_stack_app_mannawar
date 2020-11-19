@@ -15,7 +15,7 @@ router.post("/article?", authorize, async(req, res) => {
 })
 
 //update a news article(only logged in user)
-router.patch("/update/:id?", authorize,async(req, res) => {
+router.patch("/update/:id", authorize, async(req, res) => {
   try {
     const {id} = req.params;
     const { title, description, image } = req.body;
@@ -24,7 +24,7 @@ router.patch("/update/:id?", authorize,async(req, res) => {
     if(updateNewsfeed.rows.length === 0) {
       return res.json("This newslisting is not yours")
     }
-
+    console.log(updateNewsfeed.rows)
     res.json("newslistings table is updated");
 
   } catch (err) {
@@ -51,7 +51,7 @@ router.delete("/del/:id?", authorize, async(req, res) => {
 //news listing (only logged in user1)(GET)//2nd step of frontend
 router.get("/artdet", authorize ,async(req, res) => {
   try {
-    const newslisting = await pool.query("SELECT user_name, title, date_saved FROM newslistings INNER JOIN user1 ON user1.user_id = newslistings.user_id");
+    const newslisting = await pool.query("SELECT news_id, user_name, title, description, image, date_saved FROM newslistings INNER JOIN user1 ON user1.user_id = newslistings.user_id");
     console.log(newslisting);
     res.json(newslisting.rows);
   } catch (err) {

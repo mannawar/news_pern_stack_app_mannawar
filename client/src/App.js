@@ -24,7 +24,7 @@ function App() {
     try {
       const res = await fetch("http://localhost:5000/authentication/verify", {
         method: "POST",
-        headers: { jwt_token: localStorage.token }
+        headers: { jwtToken: localStorage.token }
       });
 
       const parseRes = await res.json();
@@ -88,7 +88,7 @@ function App() {
               path="/dashboard"
               render={props =>
                 isAuthenticated ? (
-                  <Dashboard {...props} setAuth={setAuth} />
+                  <Dashboard {...props} setAuth={setAuth} key={Math.random()}/>
                 ) : (
                   <Redirect to="/login" />
                 )

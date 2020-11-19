@@ -5,16 +5,16 @@ const InputNews = ({ setNewsChange }) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
 
-  const onSubmitForm = async e => {
+  const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
       const myHeaders = new Headers();
 
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("jwt_token", localStorage.token);
+      myHeaders.append("jwtToken", localStorage.token);
 
       const body = { title, description, image };
-      const response = await fetch("http://localhost:5000/dashboard/article?", {
+      const response = await fetch(`http://localhost:5000/dashboard/article?`, {
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify(body)
@@ -39,12 +39,11 @@ const InputNews = ({ setNewsChange }) => {
       <form className="d-flex" onSubmit={onSubmitForm}>
         <input
           type="text"
-          placeholder="add title"
+          placeholder="add title here"
           className="form-control"
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
-        <button className="btn btn-success ">Add</button><br />
         <input
           type="text"
           placeholder="add description"
@@ -52,7 +51,6 @@ const InputNews = ({ setNewsChange }) => {
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
-        <button className="btn btn-success ">Add</button><br />
         <input
           type="text"
           placeholder="add image"

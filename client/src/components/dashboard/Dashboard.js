@@ -15,13 +15,12 @@ const Dashboard = ({ setAuth }) => {
     try {
       const res = await fetch("http://localhost:5000/dashboard/artdet", {
         method: "GET",
-        headers: { jwt_token: localStorage.token }
+        headers: { jwtToken: localStorage.token }
       });
 
       const parseData = await res.json();
 
       setAllNews(parseData);
-      console.log(parseData);
       setName(parseData[0].user_name);
     } catch (err) {
       console.error(err.message);
@@ -44,10 +43,12 @@ const Dashboard = ({ setAuth }) => {
     setNewsChange(false);
   }, [newsChange]);
 
+  console.log(allNews);
+
   return (
     <div>
       <div className="d-flex mt-5 justify-content-around">
-        <h2>{name} 's News List</h2>
+        <h2>{name}'s News List</h2>
         <button onClick={e => logout(e)} className="btn btn-primary">
           Logout
         </button>
