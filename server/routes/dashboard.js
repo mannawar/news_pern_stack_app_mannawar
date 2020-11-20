@@ -61,10 +61,10 @@ router.get("/artdet", authorize ,async(req, res) => {
 
 
 //get news article detail(only logged in user1)
-router.get("/artdet/:id?", authorize ,async(req, res) => {
+router.get("/artdet/:user_name?", authorize ,async(req, res) => {
   try {
-    const { id } = req.params;
-    const articleDetails = await pool.query("SELECT description FROM newslistings WHERE news_id = $1", [id]);
+    const { user_name } = req.params;
+    const articleDetails = await pool.query("SELECT news_id, title, date_saved, description, image, date_saved FROM newslistings LEFT JOIN user1 ON user1.user_id = newslistings.user_id");
     console.log(articleDetails);
     res.json(articleDetails.rows);
   } catch (err) {

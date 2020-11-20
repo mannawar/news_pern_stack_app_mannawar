@@ -35,8 +35,8 @@ const InputNews = ({ setNewsChange }) => {
   };
   return (
     <Fragment>
-      <h1 className="text-center my-5">Input News</h1>
-      <form className="d-flex" onSubmit={onSubmitForm}>
+      <h2 className="text-center my-5">Add News Below</h2>
+      <form className="d-flex mb-5" onSubmit={onSubmitForm}>
         <input
           type="text"
           placeholder="add title here"
@@ -53,7 +53,7 @@ const InputNews = ({ setNewsChange }) => {
         />
         <input
           type="text"
-          placeholder="add image"
+          placeholder="image (optional)"
           className="form-control"
           value={image}
           onChange={e => setImage(e.target.value)}

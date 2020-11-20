@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
+
 //components
+import NewsSummary from "./newslist/NewsSummary";
 
-import InputNews from "./newslist/InputNews";
-import DashboardList from "./newslist/DashboardList";
-
-const Dashboard = ({ setAuth }) => {
+const Summary = ({ setAuth }) => {
+  const history = useHistory();
   const [name, setName] = useState("");
   const [allNews, setAllNews] = useState([]);
   const [newsChange, setNewsChange] = useState(false);
-  const history = useHistory();
 
   const getProfile = async () => {
     try {
@@ -20,7 +19,7 @@ const Dashboard = ({ setAuth }) => {
       });
 
       const parseData = await res.json();
-
+      console.log(parseData);
       setAllNews(parseData);
       setName(parseData[0].user_name);
     } catch (err) {
@@ -33,7 +32,7 @@ const Dashboard = ({ setAuth }) => {
     try {
       localStorage.removeItem("token");
       setAuth(false);
-      history.push("/login")
+      history.push("/login");
       toast.success("Logout successfully");
     } catch (err) {
       console.error(err.message);
@@ -50,17 +49,17 @@ const Dashboard = ({ setAuth }) => {
   return (
     <div>
       <div className="d-flex mt-5 justify-content-around">
-        <h2>Your News List here</h2>
+        <h2>Welcome to your News Summary List</h2>
         <button onClick={e => logout(e)} className="btn btn-primary">
           Logout
         </button>
       </div>
 
-      <InputNews setNewsChange={setNewsChange} />
-      <DashboardList allNews={allNews} setNewsChange={setNewsChange} />
-      <Link to="/detail">click here to go to view news detail</Link>
+      
+      <NewsSummary allNews={allNews} setNewsChange={setNewsChange} />
+      <Link to="/dashboard">Click here to create new news</Link>
     </div>
   );
 };
 
-export default Dashboard;
+export default Summary;

@@ -1,10 +1,8 @@
 import React, { Fragment, useState } from "react";
-
 const EditNews = ({ newslisting, setNewsChange }) => {
   //editText function
   const editText = async id => {
     try {
-      console.log(newslisting);
       const body = { title, description, image };
       console.log(newslisting);
       const myHeaders = new Headers();
@@ -12,34 +10,33 @@ const EditNews = ({ newslisting, setNewsChange }) => {
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("jwtToken", localStorage.token);
 
-    await fetch(`http://localhost:5000/dashboard/update/${id}`, {
-        method: "PATCH",
-        headers: myHeaders,
-        body: JSON.stringify(body)
+      await fetch(`http://localhost:5000/dashboard/update/${id}`, {
+          method: "PATCH",
+          headers: myHeaders,
+          body: JSON.stringify(body)
       });
-      
+
       setNewsChange(true);
 
-      // window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
   };
 
-  const [title, setTitle] = useState(newslisting.title);
+  const [title] = useState(newslisting.title);
   const [description, setDescription] = useState(newslisting.description);
-  const [image, setImage] = useState(newslisting.image);
+  const [image] = useState(newslisting.image);
+
   return (
     <Fragment>
       <button
         type="button"
         className="btn btn-warning"
         data-toggle="modal"
-        data-target={`#id${newslisting.news_id}`}
+        data-target={`${newslisting.user_email}`}
       >
         Edit
       </button>
-      {/* id = "id21"*/}
       <div
         className="modal"
         id={`id${newslisting.news_id}`}
@@ -48,7 +45,7 @@ const EditNews = ({ newslisting, setNewsChange }) => {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">Edit News</h4>
+              <h6 className="modal-title">click to edit news description only</h6>
               <button
                 type="button"
                 className="close"

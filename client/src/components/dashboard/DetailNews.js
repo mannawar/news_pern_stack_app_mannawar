@@ -3,10 +3,9 @@ import { toast } from "react-toastify";
 import { useHistory, Link } from "react-router-dom";
 //components
 
-import InputNews from "./newslist/InputNews";
-import DashboardList from "./newslist/DashboardList";
+import DetailList from "./newslist/DetailList";
 
-const Dashboard = ({ setAuth }) => {
+const Detail = ({ setAuth }) => {
   const [name, setName] = useState("");
   const [allNews, setAllNews] = useState([]);
   const [newsChange, setNewsChange] = useState(false);
@@ -33,7 +32,7 @@ const Dashboard = ({ setAuth }) => {
     try {
       localStorage.removeItem("token");
       setAuth(false);
-      history.push("/login")
+      history.push("/");
       toast.success("Logout successfully");
     } catch (err) {
       console.error(err.message);
@@ -45,22 +44,19 @@ const Dashboard = ({ setAuth }) => {
     setNewsChange(false);
   }, [newsChange]);
 
-  console.log(allNews);
 
   return (
     <div>
       <div className="d-flex mt-5 justify-content-around">
-        <h2>Your News List here</h2>
+        <h2>View News Details</h2>
         <button onClick={e => logout(e)} className="btn btn-primary">
           Logout
         </button>
       </div>
-
-      <InputNews setNewsChange={setNewsChange} />
-      <DashboardList allNews={allNews} setNewsChange={setNewsChange} />
-      <Link to="/detail">click here to go to view news detail</Link>
+      <DetailList allNews={allNews} setNewsChange={setNewsChange} />
+      <Link to="/dashboard">click here to go back</Link>
     </div>
   );
 };
 
-export default Dashboard;
+export default Detail;

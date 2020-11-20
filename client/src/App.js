@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/dashboard/Dashboard";
+import DetailNews from "./components/dashboard/DetailNews";
+import Summary from "./components/dashboard/Summary";
 import Landing from "./components/Landing";
 
 toast.configure();
@@ -57,7 +59,7 @@ function App() {
                 !isAuthenticated ? (
                   <Landing {...props} />
                 ) : (
-                  <Redirect to="/dashboard" />
+                  <Redirect to="/summary" />
                 )
               }
             />
@@ -68,7 +70,7 @@ function App() {
                 !isAuthenticated ? (
                   <Login {...props} setAuth={setAuth} />
                 ) : (
-                  <Redirect to="/dashboard" />
+                  <Redirect to="/summary" />
                 )
               }
             />
@@ -79,7 +81,18 @@ function App() {
                 !isAuthenticated ? (
                   <Register {...props} setAuth={setAuth} />
                 ) : (
-                  <Redirect to="/dashboard" />
+                  <Redirect to="/login" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/summary"
+              render={props =>
+                isAuthenticated ? (
+                  <Summary {...props} setAuth={setAuth} key={Math.random()}/>
+                ) : (
+                  <Redirect to="/summary" />
                 )
               }
             />
@@ -90,7 +103,18 @@ function App() {
                 isAuthenticated ? (
                   <Dashboard {...props} setAuth={setAuth} key={Math.random()}/>
                 ) : (
-                  <Redirect to="/login" />
+                  <Redirect to="/summary" />
+                )
+              }
+            />
+            <Route
+              exact
+              path="/detail"
+              render={props =>
+                isAuthenticated ? (
+                  <DetailNews {...props} setAuth={setAuth} key={Math.random()}/>
+                ) : (
+                  <Redirect to="/detail" />
                 )
               }
             />
