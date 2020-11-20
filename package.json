@@ -1,0 +1,21 @@
+{
+  "name": "newsapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mannawar/news_pern_stack_app_mannawar.git"
+  },
+  "author": "Mannawar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mannawar/news_pern_stack_app_mannawar/issues"
+  },
+  "homepage": "https://github.com/mannawar/news_pern_stack_app_mannawar#readme"
+}
